@@ -1,0 +1,12 @@
+#bodyol>li {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 1rem 1.5rem;
+    margin: 1rem 0;
+}
+
+pre {
+    font-family: "Input";
+    color: #42b983;
+    font-size: .8rem;
+}

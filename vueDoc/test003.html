@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>vue 文档模板</title>
+  <script src="vue.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+<body>
+  <h1>模板语法</h1>
+  <ol id="bodyol">
+    <li>
+      <h2>插值 (Interpolations)</h2>
+      <h3>文本 （Text）</h3>
+      <h3>原始 HTML (Raw HTML)</h3>
+      <div id="vm1">
+        <p>{{ msg }}</p>
+        <p v-html="msg"></p>
+        <button v-bind:disabled="isButtonDisabled">Button</button>
+      </div>
+      <pre></pre>
+      <script type="text/javascript">
+        var vm1 = new Vue({
+          el: "#vm1",
+          data: {
+            msg: '<span style="color: red">This should be red.</span>',
+            isButtonDisabled: false
+          }
+        })
+      </script>
+    </li>
+    <li>
+      <h2>特性 (Attributes)（即：dom 的 属性, 为了和对象的属性 property 做区分）</h2>
+      <h3></h3>
+      <pre></pre>
+    </li>
+    <li>
+      <h2></h2>
+      <h3></h3>
+      <pre></pre>
+    </li>
+    <li>
+      <h2></h2>
+      <h3></h3>
+      <pre></pre>
+    </li>
+    <li>
+      <h2></h2>
+      <h3></h3>
+      <pre></pre>
+    </li>
+    <li>
+      <h2></h2>
+      <h3></h3>
+      <pre></pre>
+    </li>
+    <li>
+      <h2></h2>
+      <h3></h3>
+      <pre></pre>
+    </li>
+    <li>
+      <h2></h2>
+      <h3></h3>
+      <pre></pre>
+    </li>
+    <li>
+      <h2></h2>
+      <h3></h3>
+      <pre></pre>
+    </li>
+    <li>
+      <h2></h2>
+      <h3></h3>
+      <pre></pre>
+    </li>
+  </ol>
+</body>
+
+</html>

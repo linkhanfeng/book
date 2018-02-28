@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>vue test1</title>
+  <script src="vue.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+<body>
+  <ol id="bodyol">
+    <li>
+      <h1>声明式渲染</h1>
+      <h2>Dom 文本插入</h2>
+      <p>Vue.js 的核心 采用简洁的模板语法来 声明式的 将数据渲染进 DOM</p>
+      <div id="app">
+        {{ message }}
+      </div>
+      <pre>app.message = '绑定文本';
+        (在控制台里输入代码; 下面的例子用法相同)
+        这个例子说明 渲染的文本是响应式的 (即:绑定)
+      </pre>
+      <h2>v-bind Dom 属性值绑定: 指令</h2>
+      <div id="app-2">
+        <span v-bind:title="message">
+          鼠标悬停几秒钟查看此处动态绑定的提示信息！
+        </span>
+      </div>
+      <pre>app2.message = '新消息';
+        将这个元素节点的 title 属性和 Vue 实例的 message 属性保持一致 (即:绑定)
+      </pre>
+    </li>
+    <script>
+    var app = new Vue({
+      el: '#app',
+      data: {
+        message: '这是由 vue 渲染的内容'
+      }
+    })
+    var app2 = new Vue({
+      el: '#app-2',
+      data: {
+        message: '页面加载于 ' + new Date().toLocaleString()
+      }
+    })
+    </script>
+
+    <li>
+      <h1>条件与循环</h1>
+      <h2>v-if 条件</h2>
+      <div id="app-3">
+        <p v-if="seen"><b>现在你看到我了</b></p>
+      </div>
+      <pre>app3.seen = 0;
+        这个例子演示了:
+        我们不仅可以绑定 DOM 文本 到数据，
+        也可以绑定 DOM 结构 到数据
+      </pre>
+      <h2> v-for 循环</h2>
+      <div id="app-4">
+        <ol>
+          <li v-for="todo in todos">
+            {{ todo.text }}
+          </li>
+        </ol>
+      </div>
+      <pre>app4.todos.push({ text: '新项目' });
+        你会发现列表中添加了一个新项
+        v-for 指令可以绑定数组的数据来渲染一个项目列表
+      </pre>
+    </li>
+    <script>
+    var app3 = new Vue({
+      el: '#app-3',
+      data: {
+        // seen: false
+        seen: true
+      }
+    })
+
+    var app4 = new Vue({
+      el: '#app-4',
+      data: {
+        todos: [
+          { text: '学习 JavaScript' },
+          { text: '学习 Vue' },
+          { text: '整个牛项目' }
+        ]
+      }
+    })
+    </script>
+
+    <li>
+      <h1>处理用户输入</h1>
+      <h2>v-on</h2>
+      <div id="app-5">
+        <p>{{ message }}</p>
+        <button v-on:click="reverseMessage">使用方法：逆转消息</button>
+      </div>
+      <pre>点击按钮
+        v-on 指令绑定一个事件监听器
+        用户和你的应用进行互动,
+        可以监听用户事件.并绑定函数. 类似 dom零级事件
+      </pre>
+      <h2>v-model</h2>
+      <div id="app-6">
+        <p>{{ message }}</p>
+        <input v-model="message">
+      </div>
+      <pre>v-model 指令，
+        它能轻松实现表单输入和应用状态之间的双向绑定。
+      </pre>
+    </li>
+    <script>
+    var app5 = new Vue({
+      el: '#app-5',
+      data: {
+        message: 'Hello Vue.js!'
+      },
+      methods: {
+        reverseMessage: function () {
+          this.message = this.message.split('').reverse().join('')
+        }
+      }
+    })
+
+    var app6 = new Vue({
+      el: '#app-6',
+      data: {
+        message: 'Hello Vue!'
+      }
+    })
+    </script>
+
+    <li>
+      <h1>组件化应用构建</h1>
+      <div id="app-7">
+        <ol>
+          <todo-item></todo-item>
+          <todo-item></todo-item>
+          <todo-item></todo-item>
+        </ol>
+      </div>
+      <pre>
+        基本组件
+      </pre>
+
+      <div id="app-7-1">
+        <ol>
+          <todo-item-b
+            v-bind:todo="grocery"
+            v-bind:key="grocery.id">
+          </todo-item-b>
+        </ol>
+        <hr>
+      </div>
+      <div id="app-7-1-1">
+        <ol>
+          <todo-item-b
+            v-bind:todo="grocery"
+            v-bind:key="grocery.id">
+          </todo-item-b>
+        </ol>
+      </div>
+      <pre>有变量的组件 有属性可接收数据的组件
+          我们应该能将数据从父作用域传到子组件。让我们来修改一下组件的定义，使之能够接受一个属性
+      </pre>
+      <div id="app-7-2">
+        <ol>
+          <todo-item-c
+            v-for="grocery in groceryList"
+            v-bind:todo="grocery"
+            v-bind:key="grocery.id">
+          </todo-item-c>
+        </ol>
+      </div>
+      <pre>复杂些的例子:: 可循环的组件</pre>
+    </li>
+    <script>
+
+    </script>
+
+    <li>
+      <h1></h1>
+      <pre></pre>
+    </li>
+  </ol>
+  <script type="text/javascript">
+    Vue.component('todo-item', {
+      template: '<li><b>组件1test</b><i>ccc</i></li>'
+    })
+    var app7 = new Vue({
+      el: '#app-7'
+    })
+
+    Vue.component('todo-item-b', {
+      props: ['todo'],
+      template: '<li>{{ todo.text }} {{ todo.entext}}</li>'
+    })
+    var app7_1 = new Vue({
+      el: '#app-7-1',
+      data: {
+        grocery: { id: 0, text: '蔬菜', entext: 'vegetables' }
+      }
+    })
+    var app7_1_1 = new Vue({
+      el: '#app-7-1-1',
+      data: {
+        grocery: { id: 0, text: '蔬菜app7_1_1', entext: 'vegetablesapp7_1_1' }
+      }
+    })
+
+    Vue.component('todo-item-c', {
+      props: ['todo'],
+      template: '<li>{{ todo.text }}</li>'
+    })
+    var app7_2 = new Vue({
+      el: '#app-7-2',
+      data: {
+        groceryList: [
+          { id: 0, text: '蔬菜7-2' },
+          { id: 1, text: '奶酪' },
+          { id: 2, text: '随便其他什么人吃的东西' }
+        ]
+      }
+    })
+
+
+
+
+
+
+
+  </script>
+</body>
+</html>
