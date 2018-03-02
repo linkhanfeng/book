@@ -37,16 +37,33 @@
     </li>
     <li>
       <h2>指令 （Directives）</h2>
-      <h3></h3>
+      <h3>1 指令用法</h3>
+      <h3>2 参数</h3>
+      <h3>3 修饰符</h3>
       <pre></pre>
-      <div id="vm2"></div>
+      <div id="vm2">
+        <p v-if="seen">1. 指令的职责是，当表达式的值改变时，将其产生的连带影响，响应式地作用于 DOM</p>
+        <a v-bind:href="url">2. 带参数的指令</a><br/>
+        <input v-on:click.prevent="clickCheckbox" type="checkbox" id="checkbox"/><label for="checkbox">3 .prevent 修饰符告诉 v-on 指令对于触发的事件调用 event.preventDefault()</label>
+      </div>
       <script type="text/javascript">
-        var vm2 =
+        var vm2 = new Vue({
+          el: "#vm2",
+          data: {
+            seen: true
+          },
+          methods: {
+            clickCheckbox: function () {
+              alert('你点击了 复选框，但是被阻止了');
+            }
+          }
+        })
       </script>
     </li>
     <li>
-      <h2></h2>
-      <h3></h3>
+      <h2>缩写</h2>
+      <h3>v-bind:href="url" 缩写 :href="url"</h3>
+      <h3>v-on:click="doSmomethine" 缩写 @click="doSmomethine"</h3>
       <pre></pre>
     </li>
     <li>
