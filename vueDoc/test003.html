@@ -13,12 +13,16 @@
   <ol id="bodyol">
     <li>
       <h2>插值 (Interpolations)</h2>
-      <h3>文本 （Text）</h3>
-      <h3>原始 HTML (Raw HTML)</h3>
+
+      <h3>1 文本 （Text）</h3>
+      <h3>2 原始 HTML v-html (Raw HTML)</h3>
+      <h3>3 特性  v-bind 指令 (Attributes)（即：dom 的 属性, 为了和对象的属性 property 做区分）</h3>
+      <h3>4 使用 JavaScript 表达式</h3>
       <div id="vm1">
-        <p>{{ msg }}</p>
-        <p v-html="msg"></p>
-        <button v-bind:disabled="isButtonDisabled">Button</button>
+        <p>1. {{ msg }}</p>
+        2.<p v-html="msg"></p>
+        <button v-bind:disabled="isButtonDisabled">3. Button</button>
+        <p>4. {{ msg + '使用表达式' }}</p>
       </div>
       <pre></pre>
       <script type="text/javascript">
@@ -26,15 +30,19 @@
           el: "#vm1",
           data: {
             msg: '<span style="color: red">This should be red.</span>',
-            isButtonDisabled: false
+            isButtonDisabled: true
           }
         })
       </script>
     </li>
     <li>
-      <h2>特性 (Attributes)（即：dom 的 属性, 为了和对象的属性 property 做区分）</h2>
+      <h2>指令 （Directives）</h2>
       <h3></h3>
       <pre></pre>
+      <div id="vm2"></div>
+      <script type="text/javascript">
+        var vm2 =
+      </script>
     </li>
     <li>
       <h2></h2>
