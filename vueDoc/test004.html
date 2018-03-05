@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,10 +9,117 @@
   <script src="vue.js"></script>
   <link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
+
 <body>
   <h1></h1>
   <ol id="bodyol">
-    (li>(h2+h3+pre))*10
+    <li>
+      <h2>计算属性和侦听器</h2>
+      <h3>计算属性</h3>
+      <div id="vm1">
+        <p>Original message: "{{ message }}"</p>
+        <p>Computed reversed message: "{{ reversedMessage }}"</p>
+        <p>{{ now }}</p>
+        <p>
+          <button v-on:click="nowFun">方法没有缓存</button>
+        </p>
+      </div>
+      <pre></pre>
+      <script type="text/javascript">
+      var vm1 = new Vue({
+        el: '#vm1',
+        data: {
+          message: 'Hello'
+        },
+        computed: {
+          // 计算属性的 getter
+          reversedMessage: function() {
+            // `this` 指向 vm 实例
+            return this.message.split('').reverse().join('')
+          },
+          now: function() {
+            return '计算属性会有缓存：' + Date.now()
+          }
+        },
+        methods: {
+          nowFun: function() {
+            alert('方法不会有缓存，每次调用都重新进行计算：' + Date.now())
+          }
+        }
+      })
+      </script>
+    </li>
+    <li>
+      <h2>计算属性 vs 侦听属性</h2>
+      <h3></h3>
+      <div id="vm2">{{ fullName }}</div>
+      <hr>
+      <div id="vm2_1">{{ fullName }}</div>
+      <pre></pre>
+      <script type="text/javascript">
+      var vm2_1 = new Vue({
+        el: '#vm2',
+        data: {
+          firstName: 'Foo',
+          lastName: 'Bar',
+          fullName: 'Foo Bar'
+        },
+        watch: {
+          firstName: function(val) {
+            this.fullName = val + ' ' + this.lastName
+          },
+          lastName: function(val) {
+            this.fullName = this.firstName + ' ' + val
+          }
+        }
+      })
+
+      var vm2_1 = new Vue({
+        el: '#vm2_1',
+      })
+
+      </script>
+    </li>
+    <li>
+      <h2></h2>
+      <h3></h3>
+      <pre></pre>
+    </li>
+    <li>
+      <h2></h2>
+      <h3></h3>
+      <pre></pre>
+    </li>
+    <li>
+      <h2></h2>
+      <h3></h3>
+      <pre></pre>
+    </li>
+    <li>
+      <h2></h2>
+      <h3></h3>
+      <pre></pre>
+    </li>
+    <li>
+      <h2></h2>
+      <h3></h3>
+      <pre></pre>
+    </li>
+    <li>
+      <h2></h2>
+      <h3></h3>
+      <pre></pre>
+    </li>
+    <li>
+      <h2></h2>
+      <h3></h3>
+      <pre></pre>
+    </li>
+    <li>
+      <h2></h2>
+      <h3></h3>
+      <pre></pre>
+    </li>
   </ol>
 </body>
 
