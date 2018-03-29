@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>vue 文档模板</title>
+  <script src="vue.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+<body>
+  <h1>列表渲染</h1>
+  <ol id="bodyol">
+    <h2>用 v-for 把一个数组对应为一组元素</h2>
+    <li>
+      <div id="v1">
+        <ul v-for="item in items">
+          <li>{{ item.msg }}</li>
+        </ul>
+
+        <pre>
+          在 v-for 块中，我们拥有对父作用域属性的完全访问权限。
+          v-for 还支持一个可选的第二个参数为当前项的索引。
+          你也可以用 of 替代 in 作为分隔符，因为它是最接近 JavaScript 迭代器的语法：
+        </pre>
+        <ul v-for="(item, index) of items">
+          <li>{{ parentMsg }} - {{ index }} - {{ item.msg }}</li>
+        </ul>
+
+        <h3>一个对象的 v-for</h3>
+        <ul v-for="(value, key) of itemsObj">
+          <li>{{ key +': ' + value }}</li>
+        </ul>
+        <pre>第三个参数为索引：</pre>
+        <ul v-for="(value, key, index) of itemsObj">
+          <li>{{ index }} {{ key +': ' + value }}</li>
+        </ul>
+
+        <h2>key</h2>
+        <pre>建议尽可能在使用 v-for 时提供 key，除非遍历输出的 DOM 内容非常简单，或者是刻意依赖默认行为以获取性能上的提升。</pre>
+        <div class="提供 key">
+          <div v-for="itema in items" :key="itema.id">
+            <span>{{ itema.msg }}</span>
+          </div>
+        </div>
+
+      </div>
+
+      <pre></pre>
+      <script type="text/javascript">
+        var vm1 = new Vue({
+          el: '#v1',
+          data: {
+            parentMsg: '我是父级作用域中的变量',
+            items: [
+              { id: 1, msg: 'Foo'},
+              { id: 2, msg: 'Bar'}
+            ],
+            itemsObj: {
+              firstName: '锋',
+              lastName: '韩',
+              age: 18
+            }
+          }
+        })
+      </script>
+    </li>
+    <h2>数组更新检测</h2>
+    <li>
+      <h3>变异方法</h3>
+      <pre>变异方法 (mutation method)，顾名思义，会改变被这些方法调用的原始数组</pre>
+      <div id="v2">
+        <ul v-for="item of items">
+          <li>{{ item.msg }}</li>
+        </ul>
+        <h3>2 替换数组</h3>
+
+        <h3>3 注意事项</h3>
+        <pre>
+          当你利用索引直接设置一个项时，例如：vm.items[indexOfItem] = newValue
+          当你修改数组的长度时，例如：vm.items.length = newLength
+        </pre>
+
+        <h3>2 替换数组</h3>
+
+        <h3>3 注意事项</h3>
+        <pre>
+          当你利用索引直接设置一个项时，例如：vm.items[indexOfItem] = newValue
+          当你修改数组的长度时，例如：vm.items.length = newLength
+        </pre>
+        <ul v-for="item of itemArr">
+          <li>{{ item }}</li>
+        </ul>
+
+      </div>
+
+      <script type="text/javascript">
+        var vm2 = new Vue({
+          el: '#v2',
+          data: {
+            items: [
+              { id: 1, msg: 'Foo'},
+              { id: 2, msg: 'Bar'}
+            ],
+
+            itemArr: ['a', 'b', 'c'],
+
+          }
+        })
+        // 2 变异方法 - push
+        // vm2.items.push({msg: 'zzz'})
+
+        // 3 非变异方法 - filter
+        // vm2.items = vm2.items.filter(function (item) {
+        //   return item.msg.match(/Foo/)
+        // })
+
+        // vm2.itemArr[0] = 'AAA' // 不起作用
+        Vue.set(vm2.itemArr, 0, 'AAA')
+      </script>
+
+
+    </li>
+    <li>
+      <h3>显示过滤/排序结果</h3>
+      <div id="v3">
+        <h3>通过计算属性</h3>
+        <ul>
+          <li v-for="n in evenNumbers">{{ n }}</li>
+        </ul>
+        <h3>在计算属性不适用的情况下 可以通过方法</h3>
+        <ul>
+          <li v-for="n in even(numbers)">{{ n }}</li>
+        </ul>
+
+        <h3>一段取值范围的 v-for</h3>
+        <div>
+          <span v-for="n in 10">{{ n }}</span>
+        </div>
+
+        <h3>v-for on a template</h3>
+        <ul>
+          <template v-for="item in items">
+            <li>{{ item.msg }}</li>
+            <li class="divider"></li>
+          </template>
+        </ul>
+
+        <h3>v-for with v-if</h3>
+        <pre>当它们处于同一节点， v-for 的优先级比 v-if 更高</pre>
+        <ul>
+          <li v-for="n in numbers" v-if="n != 2">
+            {{ n }}
+          </li>
+        </ul>
+
+        <pre>而如果你的目的是有条件地跳过循环的执行，那么可以将 v-if 置于外层元素 (或 template)上。如：</pre>
+        <ul v-if="numbers.length > 6">
+          <li v-for="n in numbers">
+            {{ n }}
+          </li>
+        </ul>
+        <p v-else>数字总数小于6</p>
+
+      </div>
+      <pre></pre>
+      <script type="text/javascript">
+        var vm3 = new Vue({
+          el: '#v3',
+          data: {
+            numbers: [ 1, 2, 3, 4, 5 ],
+            items: [
+              { msg: 'Foo'},
+              { msg: 'Bar'}
+            ],
+          },
+          computed: {
+            evenNumbers: function () {
+              return this.numbers.filter(function (number) {
+                return number % 2 === 0
+              })
+            }
+          },
+          methods: {
+            even: function (numbers) {
+              return numbers.filter(function (number) {
+                    return number % 2 === 0
+              })
+            }
+          }
+        })
+      </script>
+    </li>
+    <h2>一个组件的 v-for (先跳过)</h2>
+    <li>
+      <h3></h3>
+      <pre></pre>
+    </li>
+  </ol>
+</body>
+
+</html>

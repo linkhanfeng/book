@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>vue 文档模板</title>
+  <script src="vue.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+
+<body>
+  <h1>组件</h1>
+  <ol id="bodyol">
+    <h2>使用组件</h2>
+    <li>
+      <div id="vm2">
+        <pre>局部注册 和全局 注册的区别</pre>
+        <my-component></my-component>
+        <!-- <child-component></child-component> // 因为不是 全局组件所以报错 Unknown custom element: child-component - did you register the component correctly? -->
+      </div>
+
+      <div id='vm1'>
+        <h3>全局注册</h3>
+        <my-component></my-component>
+
+        <h3>局部注册</h3>
+        <child-component></child-component>
+
+        <h3>DOM 模板解析注意事项</h3>
+        <pre>应当注意，如果使用来自以下来源之一的字符串模板，则没有这些限制：因此，请尽可能使用字符串模板。</pre>
+        <!-- 错误的方式
+        <table>
+          <my-row>...</my-row>
+        </table>
+         -->
+        <table>
+          <tr is="my-row"></tr>
+        </table>
+
+        <h3>组件中的 data 必须是函数</h3>
+        <simple-counter></simple-counter>
+        <simple-counter></simple-counter>
+        <simple-counter></simple-counter>
+
+        <h4>组件组合</h4>
+        <pre>在 Vue 中，父子组件的关系可以总结为 prop 向下传递，事件向上传递。父组件通过 prop 给子组件下发数据，子组件通过事件给父组件发送消息。</pre>
+
+      </div>
+
+        <h3>组件组合</h3>
+    </li>
+    <script type="text/javascript">
+      // 全局注册
+      Vue.component('my-component', {
+        template: '<div>一个全局组件</div>'
+      })
+      // 组件中的 data 必须是函数
+      Vue.component('simple-counter', {
+        template: '<button v-on:click="counter += 1">{{ counter }}</button>',
+        data: function(){
+          return {
+            counter: 0
+          }
+        }
+      })
+
+      // 局部组件
+      var Child = {
+        template: '<div>一个局部注册的组件</div>'
+      }
+      var myRow = {
+        template: '<tr>这个一个表格行</tr>'
+      }
+
+      // 初始化根实例
+      var vm1 = new Vue({
+        el: '#vm1',
+        components: {
+          'child-component': Child,
+          'my-row': myRow,
+        }
+      })
+
+      var vm2 = new Vue({
+        el: '#vm2',
+      })
+    </script>
+
+    <h2>Prop</h2>
+    <li>
+      <h3>使用 Prop 传递数据</h3>
+      <div id="vm3">
+        <my-child message="hello"></my-child>
+
+        <h3>camelCase vs. kebab-case 驼峰法和短横线命名法</h3>
+        <my-child kebab-case="驼峰法短横线"></my-child>
+        <pre></pre>
+
+<!--         <h3>字面量语法 vs 动态语法</h3>
+        <my-child message="1" kebab-case="字面量语法,传递的都是字符串"></my-child>
+        <my-child v-bind:message="1" kebab-case="动态语法,可以传递数值等"></my-child>
+
+        <h3>单向数据流</h3>
+
+        <h3>Prop 验证</h3>
+        <example prop-c="strccc"></example>
+
+        <h3>非 Prop 特性</h3>
+        <my-child data-3d-date-picker="true"></my-child>
+
+        <h3>替换/合并现有的特性</h3> -->
+
+      </div>
+
+      <h3>替换/合并现有的特性</h3>
+      <div id="app3">
+          <my-component2 att="helloParent" class="cls2" style="font-size: 18px;"></my-component2>
+      </div>
+      <script>
+        Vue.component('my-component2', {
+          template: `<div att="helloChild" class="cls1" style="background: yellow;">子组件原有的特性被覆盖了, style 和 class 合并</div>`
+        })
+        new Vue({
+          el: '#app3'
+        })
+      </script>
+
+
+        <h3>动态 Prop</h3>
+        <pre>同 v-bind 命令, 每当父组件的数据变化时，该变化也会传导给子组件：</pre>
+        <div id="prop-example-2">
+          <input v-model="parentMsg">
+          <br>
+          <my-childa :child-msg="parentMsg"></my-childa>
+        </div>
+
+        <div id="app2">
+          <div>这是父组件的parentArray：{{parentArray}}</div>
+          <my-componentccc :child-array="parentArray"></my-componentccc>
+        </div>
+
+        <script type="text/javascript">
+            var myChilda = {
+              props: ['childMsg'],
+              template: '<p>这是从父组件 中通过 props 传递过来的数据:: {{ childMsg }}</p>',
+            }
+
+            var vm8 = new Vue({
+              el: '#prop-example-2',
+              data: {
+                parentMsg: '7777'
+              },
+              components: {
+                'my-childa': myChilda
+              },
+            })
+
+          Vue.component('my-componentccc', {
+           props: ['childArray'],
+           template: `<div>这是接收了父组件传递值的子组件的childArray: {{childArray}} <br>
+               <button type="button" @click="changeArray">点击我改变父元素的parentArray</button>
+             </div>`,
+           data () {
+             return {
+               counter: 1
+             }
+           },
+           methods: {
+             changeArray () {
+               this.childArray.push(this.counter++)
+             }
+           }
+          })
+
+          new Vue({
+           el: '#app2',
+           data: {
+             parentArray: []
+           }
+          })
+        </script>
+
+    </li>
+    <script type="text/javascript">
+      Vue.component('my-child', {
+        // 声明 props
+        props: ['message', 'kebabCase'],
+        // 就像 data 一样，prop 也可以在模板中使用
+        // 同样也可以在 vm 实例中通过 this.message 来使用
+        template: '<P>{{ message }} {{ kebabCase }} TTT {{ typeof message }} {{ typeof kebabCase }}</P>'
+      })
+
+      Vue.component('example', {
+        props: {
+          // 基础类型检测 (`null` 指允许任何类型)
+          propA: Number,
+          // 可能是多种类型
+          propB: [String, Number],
+          // 必传且是字符串
+          propC: {
+            type: String,
+            required: true
+          },
+          // 数值且有默认值
+          propD: {
+            type: Number,
+            default: 100
+          },
+          // 数组/对象的默认值应当由一个工厂函数返回
+          propE: {
+            type: Object,
+            default: function () {
+              return { message: 'hello' }
+            }
+          },
+          // 自定义验证函数
+          propF: {
+            validator: function (value) {
+              return value > 10
+            }
+          }
+        },
+        template: '<p>propA: {{ propA }}| propB: {{ propB }}| propC: {{ propC }}| propD: {{ propD }}| propE: {{ propE }}|  propF:{{ propF }}</p>'
+      })
+
+      var vm3 = new Vue({
+        el: '#vm3',
+        data: {
+          parentMsg: 'Message from parent',
+          todo: {
+            text: 'learn vue',
+            name: 'vvv'
+          }
+        }
+      })
+    </script>
+
+    <h2>自定义事件</h2>
+    <li>
+      <div id="counter-event-example">
+        <p>{{ total }}</p>
+        <button-counter></button-counter>
+        <button-counter v-on:myck="curAdd"></button-counter>
+      </div>
+    </li>
+    <script type="text/javascript">
+
+      Vue.component('button-counter', {
+        data: function(){
+          return {
+            counter: 0
+          }
+        },
+        template: '<button v-on:click="childAdd">{{ counter }}</button>',
+        methods: {
+          childAdd: function(){
+            this.counter += 1
+            // 触发自定义的 myck 事件
+            this.$emit('myck')
+          }
+        }
+      })
+
+      new Vue({
+        el: '#counter-event-example',
+        data: {
+          total: 111
+        },
+        methods: {
+          curAdd: function(){
+            this.total += 10;
+          }
+        }
+      })
+    </script>
+
+    <div id="app35">
+        <my-component29 v-on:myclick="onClick"></my-component29>
+    </div>
+    <script>
+      Vue.component('my-component29', {
+        template: `<div>
+        <button type="button" @click="childClick">点击我触发自定义事件</button>
+        </div>`,
+        methods: {
+          childClick () {
+            this.$emit('myclick', '这是我暴露出去的数据', '这是我暴露出去的数据2')
+          }
+        }
+      })
+      new Vue({
+        el: '#app35',
+        methods: {
+          onClick () {
+            console.log(arguments)
+          }
+        }
+      })
+    </script>
+
+    <li>
+      <pre>如何使用载荷 (payload) 数据</pre>
+      <div id="message-event-example" class="demo">
+        <button-message v-on:eventmessage="handleMessage"></button-message>
+        <p v-for="msg in messages">{{ msg }}</p>
+      </div>
+    </li>
+
+    <script type="text/javascript">
+      Vue.component('button-message', {
+        template: `<div>
+          <input type="text" v-model="message" />
+          <button v-on:click="handleSendMessage">Send</button>
+        </div>`,
+        data: function () {
+          return {
+            message: 'test message'
+          }
+        },
+        methods: {
+          handleSendMessage: function () {
+            this.$emit('eventmessage', { message: this.message })
+          }
+        }
+      })
+
+      new Vue({
+        el: '#message-event-example',
+        data: {
+          messages: []
+        },
+        methods: {
+          handleMessage: function (payload) {
+            this.messages.push(payload.message)
+          }
+        }
+      })
+    </script>
+
+
+    <li>
+      <h3>给组件绑定原生事件</h3>
+      <div id="vm4">
+        <my-componentcc v-on:click.native="nativeFun"></my-componentcc>
+        <my-componentcc></my-componentcc>
+      </div>
+      <pre></pre>
+    </li>
+    <script type="text/javascript">
+      var myComponentcc = {
+        data: function(){
+          return {
+            msg: '绑定测试'
+          }
+        },
+        methods: {
+          someFun: function(){
+            alert('组件内的事件');
+          }
+        },
+        template: `<div>
+        <button v-on:click="someFun">{{ msg }}</button>
+        </div>`,
+      }
+
+      var vm4 = new Vue({
+        el: '#vm4',
+        methods: {
+          nativeFun: function(){
+            alert('原生点击事件');
+          }
+        },
+        components: {
+         'my-componentcc': myComponentcc
+        }
+      })
+    </script>
+
+    <li>
+      <h3>.sync 修饰符 (prop 双向绑定)</h3>
+      <div id="example">
+          <input type="text" v-model="msg">
+          <child :msg.sync="msg"></child>
+      </div>
+
+      <script type="text/javascript">
+        var child = Vue.extend({
+          props: ['msg'],
+          template: '<div><button v-on:click="changeChildMsg">click</button> <p>{{msg}}</p></div>',
+          methods: {
+            changeChildMsg () {
+              this.$emit('update:msg', "hello")
+            }
+          }
+        })
+
+        var vm6 = new Vue({
+          el: '#example',
+          data () {
+            return {
+              msg: 'wang wang wang!'
+            }
+          },
+          components: {
+            child: child
+          }
+        })
+      </script>
+    </li>
+    <li>
+      <h3>使用自定义事件的表单输入组件</h3>
+      <div id="vm7">
+        <!-- <input v-model="something"> -->
+      <!-- <input v-bind:value="something" v-on:input="something = $event.target.value"> -->
+
+      <pre>简单的货币输入的自定义控件</pre>
+      <currency-input v-model="price"></currency-input>
+
+      </div>
+    </li>
+    <script type="text/javascript">
+      Vue.component('currency-input', {
+        template: '\
+          <span>\
+            $<input ref="input" v-bind:value="value" v-on:input="updateValue($event.target.value)">\
+          </span>\
+        ',
+        props: ['value'],
+        methods: {
+          // 不是直接更新值，而是使用此方法来对输入值进行格式化和位数限制
+          updateValue: function (value) {
+            var formattedValue = value.trim()
+              .slice(0,value.indexOf('.') === -1 ? value.length : value.indexOf('.') + 3)
+            // 如果值尚不合规，则手动覆盖为合规的值
+            if (formattedValue !== value) {
+              this.$refs.input.value = formattedValue
+            }
+            // 通过 input 事件带出数值
+            this.$emit('input', Number(formattedValue))
+          }
+        }
+      })
+
+      var vm7 = new Vue({
+        el: '#vm7',
+        data:{
+          something: 'test',
+          price: 0,
+        }
+      })
+    </script>
+
+    <li>
+      <h3>探究 v-model</h3>
+      <pre> v-model 就是下面这种方式的 语法糖</pre>
+      <div id="app4">
+         {{txtv}}
+        <input type="text" v-bind:value="txtv" v-on:input="changeValue($event.target.value)">
+        <p>语法糖</p>
+        <input type="text" v-model="txtv">
+      </div>
+
+      <script>
+          new Vue({
+            el: '#app4',
+            data: {
+              txtv: '444'
+            },
+            methods: {
+              changeValue (value) {
+                this.txtv = value
+              }
+            }
+          })
+      </script>
+    </li>
+    <li>
+      <h3></h3>
+      <pre>使用自定义事件创建自定义的表单输入组件</pre>
+      <div id="app5">
+          <my-component3 v-model="hello"></my-component3>
+          <div>{{hello}}</div>
+      </div>
+
+      <script>
+        Vue.component('my-component3', {
+          template: `<input ref="input" type="text" :value="value" @input="checkInput($event.target.value)">`,
+          props: ['value'],
+          methods: {
+            checkInput (value) {
+              var hello = 'hello'
+              if (!hello.includes(value)) {
+                this.$emit('input', hello)
+                this.$refs.input.value = hello
+              } else {
+                this.$emit('input', value)
+              }
+            }
+          }
+        })
+        new Vue({
+          el: '#app5',
+          data: {
+            hello: '666'
+          }
+        })
+      </script>
+    </li>
+    <li>
+      <h3>动态组件</h3>
+      <pre></pre>
+     <div id="app6">
+        <select v-model="currentComponent">
+          <option value="home">home</option>
+          <option value="post">post</option>
+          <option value="about">about</option>
+        </select>
+        <keep-alive>
+          <!-- 非活动组件将被缓存！ -->
+          <component :is="currentComponent"></component>
+        </keep-alive>
+      </div>
+      <script>
+          new Vue({
+            el: '#app6',
+            data: {
+              currentComponent: 'home'
+            },
+            components: {
+              home: {
+                template: `<header>这是home组件</header>`
+              },
+              post: {
+                template: `<header>这是post组件</header>`
+              },
+              about: {
+                template: `<header>这是about组件</header>`
+              }
+            }
+          })
+    </script>
+    </li>
+
+    <h3>插槽</h3>
+
+    <pre>单个插槽</pre>
+    <div id="vm13">
+      <h1>我是父组件的标题</h1>
+      <child-component33>
+         <p>这是一些初始内容</p>
+         <p>这是更多的初始内容</p>
+      </child-component33>
+    </div>
+    <script type="text/javascript">
+      var vm13 = new Vue({
+        el: '#vm13',
+        data: {
+        },
+        components: {
+          childComponent33: {
+            data: function(){
+              return {
+                isshow: true,
+              }
+            },
+            template: `<div>
+                      <h2>我是子组件的标题</h2>
+                      <slot>
+                        只有在没有要分发的内容时才会显示。
+                      </slot>
+                    </div>`,
+          }
+        }
+      })
+    </script>
+  </ol>
+
+  <pre>具名插槽</pre>
+
+  <div id="vm14">
+    <app-layout>
+      <h1 slot="header">这里可能是一个页面标题</h1>
+
+      <p>主要内容的一个段落。</p>
+      <p>另一个主要段落。</p>
+
+      <p slot="footer">这里有一些联系信息</p>
+    </app-layout>
+  </div>
+
+  <script type="text/javascript">
+    var vm14 = new Vue({
+      el: '#vm14',
+      components: {
+        appLayout: {
+          template: `<div class="container">
+                      <header>
+                        <slot name="header"></slot>
+                      </header>
+                      <main>
+                        <slot></slot>
+                      </main>
+                      <footer>
+                        <slot name="footer"></slot>
+                      </footer>
+                    </div>`,
+        }
+      }
+    })
+  </script>
+
+  <pre>作用域插槽</pre>
+
+  <div id="vm15">
+    <div class="parent">
+      <child-com3>
+        <template slot-scope="props">
+          <span>hello from parent</span>
+          <span>{{ props.text }}</span>
+        </template>
+      </child-com3>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var vm15 = new Vue({
+      el: '#vm15',
+      components: {
+        'child-com3': {
+          template: `<div class="child">
+                      <slot text="hello from child"></slot>
+                    </div>`,
+        }
+      }
+    })
+  </script>
+
+
+
+</body>
+
+</html>

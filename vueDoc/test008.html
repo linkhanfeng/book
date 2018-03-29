@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>vue 文档模板</title>
+  <script src="vue.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+
+<body>
+  <h1>事件处理</h1>
+  <ol id="bodyol">
+    <h2>监听事件</h2>
+    <li>
+      <h3></h3>
+      <div id="v1">
+        <button v-on:click="counter += 1">Add 1</button>
+        <p>The button above has been clicked {{ counter }} times.</p>
+
+        <h2>事件处理方法</h2>
+        <button v-on:click="greet">Greet</button>
+
+        <h2>内联处理器中的方法</h2>
+        <button v-on:click="say('hi')">say hi</button>
+        <button v-on:click="say('what')">say what</button>
+
+        <pre>有时也需要在内联语句处理器中访问原始的 DOM 事件。可以用特殊变量 $event 把它传入方法</pre>
+        <button v-on:click="warn('Form cannot be submitted yet.', $event)">Submit</button>
+
+        <h2>事件修饰符</h2>
+        <!-- 阻止单击事件继续传播 -->
+        <a v-on:click.stop="doThis"></a>
+
+        <!-- 提交事件不再重载页面 -->
+        <form v-on:submit.prevent="onSubmit"></form>
+
+        <!-- 修饰符可以串联 -->
+        <a v-on:click.stop.prevent="doThat"></a>
+
+        <!-- 只有修饰符 -->
+        <form v-on:submit.prevent></form>
+
+        <!-- 添加事件监听器时使用事件捕获模式 -->
+        <!-- 即元素自身触发的事件先在此处处理，然后才交由内部元素进行处理 -->
+        <div v-on:click.capture="doThis">...</div>
+
+        <!-- 只当在 event.target 是当前元素自身时触发处理函数 -->
+        <!-- 即事件不是从内部元素触发的 -->
+        <div v-on:click.self="doThat">...</div>
+
+        <h2>按键修饰符</h2>
+        <input v-on:keyup.13="submitFun">
+        <!-- 同上 -->
+        <input v-on:keyup.enter="submitFun">
+        <!-- 缩写语法 -->
+        <input @keyup.enter="submitFun">
+
+        <h2>系统修饰键</h2>
+        <!-- Alt + C -->
+        <input @keyup.alt.67="clear($event)">
+        <!-- Ctrl + Click -->
+        <button @click.ctrl="doSomething">Ctrl + Click 快捷键</button>
+
+        <h2>.exact 修饰符</h2>
+        <pre>精确的系统修饰符组合触发的事件。</pre>
+        <!-- 即使 Alt 或 Shift 被一同按下时也会触发 -->
+        <button @click.ctrl="onClick">A</button>
+
+        <h2>鼠标按钮修饰符</h2>
+
+        <h2>为什么在 HTML 中监听事件?</h2>
+      </div>
+
+      <script type="text/javascript">
+        var vm1 = new Vue({
+          el: '#v1',
+          data: {
+            counter: 0,
+            name: 'vue 例子1'
+          },
+          methods: {
+            greet: function (event) {
+              alert(this.name)
+              if(event){
+                alert(event.target.tagName)
+              }
+            },
+
+            say: function(msg){
+              alert(msg)
+            },
+
+            warn: function(msg, event){
+              if(event) event.preventDefault()
+              alert(msg);
+            },
+
+            submitFun: function(){
+              alert('触发回车键')
+            },
+
+            clear: function(event){
+              alert('点击确定清除输入框')
+              event.target.value = ''
+            },
+
+            doSomething: function(){
+              alert('触发 Ctrl + Click 快捷键')
+            }
+          }
+
+        })
+
+        // 也可以用 JavaScript 直接调用方法
+        // vm1.greet() // => 'vue 例子1'
+      </script>
+    </li>
+    <li>
+      <h3></h3>
+      <pre></pre>
+    </li>
+    <li>
+      <h3></h3>
+      <pre></pre>
+    </li>
+    <li>
+      <h3></h3>
+      <pre></pre>
+    </li>
+    <li>
+      <h3></h3>
+      <pre></pre>
+    </li>
+    <li>
+      <h3></h3>
+      <pre></pre>
+    </li>
+    <li>
+      <h3></h3>
+      <pre></pre>
+    </li>
+    <li>
+      <h3></h3>
+      <pre></pre>
+    </li>
+    <li>
+      <h3></h3>
+      <pre></pre>
+    </li>
+    <li>
+      <h3></h3>
+      <pre></pre>
+    </li>
+  </ol>
+</body>
+
+</html>

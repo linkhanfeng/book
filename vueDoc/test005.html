@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>vue 文档模板</title>
+  <script src="vue.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+<body>
+  <h1>Class 与 Style 绑定</h1>
+  <ol id="bodyol">
+    <h2>绑定 HTML Class</h2>
+    <li>
+      <h3>对象语法</h3>
+      <div id="v1">
+        <div v-bind:class="{'msg-danger': hasError, active: isActive }">class 对象内联定义在模板里</div>
+        <div v-bind:class="classObject">class 对象定义在 vue 实例中</div>
+        <div v-bind:class="classObj">class 绑定一个返回对象的计算属性</div>
+      </div>
+      <pre></pre>
+      <script>
+        var vm1 = new Vue({
+          el: '#v1',
+
+          data: {
+            isActive: true,
+            hasError: false,
+            error: null,
+            classObject: {
+              active: true,
+              'msg-danger': true
+            }
+          },
+
+          computed: {
+            classObj: function(){
+              return {
+                active: this.isActive && !this.error,
+                'text-danger': this.error && this.error.type === 'fatal'
+              }
+            }
+          }
+        })
+      </script>
+    </li>
+    <li>
+      <h3>数组语法</h3>
+      <div id="v2">
+        <div v-bind:class="[activeClass, errorClass]">class 数组语法</div>
+        <div v-bind:class="[isActive ? activeClass : '', errorClass]">根据条件切换列表中的 class, 可以用三元表达式</div>
+        <div v-bind:class="[{ active: isActive }, errorClass]">不过，当有多个条件 class 时这样写有些繁琐。所以在数组语法中也可以使用对象语法</div>
+      </div>
+      <pre></pre>
+      <script type="text/javascript">
+        var vm2 = new Vue({
+          el: '#v2',
+          data: {
+            isActive: false,
+            activeClass: 'active',
+            errorClass: 'text-danger'
+          }
+        })
+      </script>
+    </li>
+    <li>
+      <h3>用在组件上</h3>
+      <pre></pre>
+      <div id="v3"></div>
+    </li>
+
+    <h2>绑定内联样式</h2>
+    <li>
+      <h3>对象语法</h3>
+      <pre>v-bind:style 的对象语法十分直观——看着非常像 CSS，但其实是一个 JavaScript 对象。CSS 属性名可以用驼峰式 (camelCase) 或短横线分隔 (kebab-case，记得用单引号括起来) 来命名：</pre>
+      <div id="v4">
+        <div v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }">内联 对象语法</div>
+        <div v-bind:style="styleObject">直接绑定到一个样式对象通常更好，这会让模板更清晰</div>
+        <h3>数组语法</h3>
+        <div v-bind:style="[baseStyles, overridingStyles]">内联 style 数组语法</div>
+        <h3>自动添加前缀</h3>
+        <div v-bind:style="[autoStyleFix]">(???)当 v-bind:style 使用需要添加浏览器引擎前缀的 CSS 属性时，如 transform，Vue.js 会自动侦测并添加相应的前缀。</div>
+        <h3>多重值</h3>
+        <div :style="{ display: ['-webkit-box', '-ms-flexbox', 'flex'] }">从 2.3.0 起你可以为 style 绑定中的属性提供一个包含多个值的数组，常用于提供多个带前缀的值，例如：</div>
+      </div>
+      <script type="text/javascript">
+        var vm4 = new Vue({
+          el: '#v4',
+          data: {
+            activeColor: '#f00',
+            fontSize: 10,
+            styleObject:{
+              color: 'blue',
+              fontSize: '14px'
+            },
+            baseStyles: {
+              color: '#f99',
+              fontSize: '17px'
+            },
+            overridingStyles: {
+              background: '#ccc'
+            },
+            autoStyleFix: {
+              transform: 'rotate(5deg)'
+            }
+          }
+        })
+      </script>
+    </li>
+    <li>
+      <h2></h2>
+      <h3></h3>
+      <pre></pre>
+    </li>
+    <li>
+      <h2></h2>
+      <h3></h3>
+      <pre></pre>
+    </li>
+    <li>
+      <h2></h2>
+      <h3></h3>
+      <pre></pre>
+    </li>
+    <li>
+      <h2></h2>
+      <h3></h3>
+      <pre></pre>
+    </li>
+    <li>
+      <h2></h2>
+      <h3></h3>
+      <pre></pre>
+    </li>
+  </ol>
+</body>
+
+</html>
