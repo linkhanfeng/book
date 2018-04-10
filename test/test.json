@@ -1,0 +1,45 @@
+[
+  {
+    "command": "new_window",
+    "keys": ["ctrl+shift+n"]
+  },
+  {
+    "command": "close_window",
+    "keys": ["ctrl+shift+w"]
+  },
+  {
+    "command": "prompt_open_file",
+    "keys": ["ctrl+o"]
+  },
+  {
+    "command": "reopen_last_file",
+    "keys": ["ctrl+shift+t"]
+  },
+  {
+    "args": {
+      "extensions": ["cpp", "cxx", "cc", "c", "hpp", "hxx", "hh", "h", "ipp", "inl", "m", "mm"]
+    },
+    "command": "switch_file",
+    "keys": ["alt+o"]
+  },
+  {
+    "command": "new_file",
+    "keys": ["ctrl+n"]
+  },
+  {
+    "command": "save",
+    "keys": ["ctrl+s"]
+  },
+  {
+    "command": "prompt_save_as",
+    "keys": ["ctrl+shift+s"]
+  },
+  {
+    "command": "close_file",
+    "keys": ["ctrl+f4"]
+  },
+  {
+    "command": "close",
+    "keys": ["ctrl+w"]
+  }
+]

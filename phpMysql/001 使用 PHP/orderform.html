@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>购物车</title>
+</head>
+
+<body>
+  <h1>购物车</h1>
+  <p>
+    <span>Item</span>------------<span>Quantity</span>
+  </p>
+  <form action="processorder.php" method="GET">
+    <p>
+      <label>Tires</label>
+      <input data-id="123" type="text" name="tireqty" value="">
+    </p>
+    <p>
+      <label>Oil</label>
+      <input type="text" name="oilqty" value="">
+    </p>
+    <p>
+      <label>Spark Plugs</label>
+      <input type="text" name="sparkqty" value="">
+    </p>
+    <p>
+      <label>您通过什么渠道找到这个商店的? 帮助调查打 99 折。</label>
+      <select name="find">
+        <option value="0">请选择:</option>
+        <option value="a">通过朋友介绍</option>
+        <option value="b">通过电视广告</option>
+        <option value="c">通过网络广告</option>
+      </select>
+    </p>
+    <input type="submit" value="Submit Order">
+  </form>
+</body>
+<script>
+  var a = 123;
+  function functionName() {
+    
+  }
+</script>
+
+</html>
