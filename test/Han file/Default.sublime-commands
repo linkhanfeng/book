@@ -1,0 +1,14 @@
+[
+    {
+        "caption": "Han File: copy current file name",
+        "command": "copy_cur_file_name"
+    },
+    {
+        "caption": "Han File: copy current file name with extension",
+        "command": "copy_cur_file_name_with_extension"
+    },
+    {
+        "caption": "Han File: copy current file path",
+        "command": "copy_cur_file_path"
+    }
+]
